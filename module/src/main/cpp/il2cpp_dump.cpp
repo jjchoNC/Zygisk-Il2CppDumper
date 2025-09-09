@@ -343,6 +343,23 @@ void il2cpp_api_init(void *handle) {
     il2cpp_thread_attach(domain);
 }
 
+std::string readCString(pid_t pid, uintptr_t address, size_t maxLen = 256) {
+    char buffer[256] = {0};
+    struct iovec local[1];
+    struct iovec remote[1];
+
+    local[0].iov_base = buffer;
+    local[0].iov_len  = maxLen;
+    remote[0].iov_base = reinterpret_cast<void*>(address);
+    remote[0].iov_len  = maxLen;
+
+    ssize_t nread = process_vm_readv(pid, local, 1, remote, 1, 0);
+    if (nread > 0) {
+        return std::string(buffer);
+    }
+    return {};
+}
+
 void il2cpp_dump(const char *outDir) {
     LOGI("dumping...");
     size_t size;
@@ -355,8 +372,9 @@ void il2cpp_dump(const char *outDir) {
         auto image = il2cpp_assembly_get_image(assemblies[i]);
         auto name = il2cpp_image_get_name(image);
         imageOutput << "// Image " << i << ": " << name << "\n";
-        LOGI("Image %d: %p", i, name);
+        LOGI("Image %d: %s", i, readCString(name));
     }
+    return;
     std::vector<std::string> outPuts;
     if (il2cpp_image_get_class) {
         LOGI("Version greater than 2018.3");
