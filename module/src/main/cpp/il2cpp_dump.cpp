@@ -347,8 +347,10 @@ void il2cpp_dump(const char *outDir) {
     LOGI("dumping...");
     size_t size;
     auto domain = il2cpp_domain_get();
+    LOGI("domain: %p", domain);
     auto assemblies = il2cpp_domain_get_assemblies(domain, &size);
     std::stringstream imageOutput;
+    LOGI("Assembly count: %zu", size);
     for (int i = 0; i < size; ++i) {
         auto image = il2cpp_assembly_get_image(assemblies[i]);
         imageOutput << "// Image " << i << ": " << il2cpp_image_get_name(image) << "\n";
