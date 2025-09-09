@@ -361,6 +361,7 @@ void il2cpp_dump(const char *outDir) {
             auto image = il2cpp_assembly_get_image(assemblies[i]);
             std::stringstream imageStr;
             imageStr << "\n// Dll : " << il2cpp_image_get_name(image);
+            LOGI("image name : %s", il2cpp_image_get_name(image));
             auto classCount = il2cpp_image_get_class_count(image);
             for (int j = 0; j < classCount; ++j) {
                 auto klass = il2cpp_image_get_class(image, j);
