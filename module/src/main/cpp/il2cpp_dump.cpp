@@ -352,6 +352,7 @@ void il2cpp_dump(const char *outDir) {
     for (int i = 0; i < size; ++i) {
         auto image = il2cpp_assembly_get_image(assemblies[i]);
         imageOutput << "// Image " << i << ": " << il2cpp_image_get_name(image) << "\n";
+        LOGI("Image %d: %s", i, il2cpp_image_get_name(image));
     }
     std::vector<std::string> outPuts;
     if (il2cpp_image_get_class) {
