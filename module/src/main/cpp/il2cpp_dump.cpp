@@ -355,7 +355,6 @@ void il2cpp_dump(const char *outDir) {
         auto image = il2cpp_assembly_get_image(assemblies[i]);
         auto name = il2cpp_image_get_name(image);
         imageOutput << "// Image " << i << ": " << name << "\n";
-        readcstring[sizeof(readcstring) - 1] = 0;
         LOGI("Image %d: %p", i, name);
     }
     std::vector<std::string> outPuts;
